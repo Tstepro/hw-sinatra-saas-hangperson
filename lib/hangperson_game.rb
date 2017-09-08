@@ -40,19 +40,18 @@ class HangpersonGame
     end
     
     if @word.include? x
-      if !@guesses.include? x
+      if !repeated?(x)
         @guesses += x.to_s
         return true
       end
-      return false
     else
-      if !@wrong_guesses.include? x
+      if !repeated?(x)
         @wrong_guesses += x.to_s
         @num_guesses += 1
         return true
       end
-      return false
     end
+    return false
   end
 
   def word_with_guesses
@@ -65,6 +64,10 @@ class HangpersonGame
       end
     end
     result
+  end
+  
+  def repeated? x
+    @guesses.include?(x) || @wrong_guesses.include?(x)
   end
   
   def check_win_or_lose
